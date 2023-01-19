@@ -1,0 +1,33 @@
+--JOINS
+--1. Sa se afiseze toate rezervarile clientilor ale caror numere de telefon au prefixul '0765'
+SELECT R.ID_REZERVARE, c.NUMAR_TELEFON
+    FROM REZERVARE R, CLIENT C
+        WHERE R.ID_CLIENT=C.ID_CLIENT AND C.NUMAR_TELEFON LIKE '0765%';
+        
+
+--2. Sa se afiseze numele filmelor ce sunt progromate in sali ce au capacitate de peste 30 de persoane
+SELECT F.NUME, S.CAPACITATE "CAPACITATE SALA"
+    FROM FILM F, FILM_PROGRAMAT FP, SALA S
+        WHERE F.ID_FILM=FP.ID_FILM AND FP.ID_SALA=S.ID_SALA AND S.CAPACITATE>30;
+
+
+--3. Sa se afiseze randurile in care vor sta persoane care au facut rezervare dupa data de 25-NOV-2022
+SELECT R.ID_RAND, RE.DATA_REZERVARE
+    FROM RAND R, LOC L, REZERVARE RE
+        WHERE R.ID_RAND=L.ID_RAND AND L.ID_LOC=RE.ID_LOC AND
+            RE.DATA_REZERVARE>to_date('25-11-2022','dd-mm-yyyy');
+
+--4. Sa se afiseze clientii care au facut rezervare la filme mai ieftine de 20 de lei
+SELECT C.NUME || C.PRENUME AS "Client"
+    FROM CLIENT C, REZERVARE R, FILM_PROGRAMAT FP
+        WHERE C.ID_CLIENT=R.ID_CLIENT AND R.ID_FILM_PROGRAMAT=FP.ID_FILM_PROGRAMAT
+            AND FP.PRET<20;
+
+--5. Sa se afiseze actorii care joaca in filme programate in cinema-ul cu ID=600;
+SELECT A.ID_ACTOR || ' ' || A.NUME AS "ACTOR"
+    FROM ACTOR A, LISTA_ACTORI LA, FILM F, FILM_PROGRAMAT FP, SALA S, CINEMA C
+        WHERE A.ID_LISTA=LA.ID_LISTA AND LA.ID_FILM=F.ID_FILM AND F.ID_FILM=FP.ID_FILM AND 
+        FP.ID_SALA=S.ID_SALA AND S.ID_CINEMA=C.ID_CINEMA 
+            AND C.ID_CINEMA=600;
+
+

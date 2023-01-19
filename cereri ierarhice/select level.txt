@@ -1,0 +1,1 @@
+--1. Sa se afiseze randurile care au mai mult de 7 locuri
